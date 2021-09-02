@@ -1,0 +1,128 @@
+*{
+  box-sizing: border-box;
+}
+
+html{
+  width: 100%;
+  height: 100%;
+}
+
+body{
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+}
+
+.mainPage{
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20% 1fr 10%;
+}
+.navbar{
+  background-color: rgb(35, 70, 35);
+  padding: 1%;
+}
+
+.popUp{
+  height: 85%;
+  width: 35%;
+  display: grid;
+  grid-template-rows: 10% 90%;
+  grid-template-columns: 1fr;
+  row-gap: 1em;
+  padding: 2em;
+  border: 0.12em solid black;
+  border-radius: 10%;
+  transition: 0.2s;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 10;
+  background-color: white;
+  font-family:Arial, Helvetica, sans-serif;
+  
+}
+
+.popUp.active{
+  transition: 0.2s;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.formTop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+#closePopUp{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 1em;
+  height: 1em;
+  color: white;
+  background-color: red;
+  border: none;
+  font-weight: 900;
+  font-size: 2em;
+  border-radius: 20%;
+  box-shadow: 0em 0em 0.1em rgb(160, 59, 59);
+  cursor: pointer;
+}
+
+#closePopUp:hover{
+  transform: scale(120%);
+}
+
+.form{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 1em;
+}
+
+#submitStatus{
+  text-align: center;
+}
+
+#submit{
+  cursor: pointer;
+}
+
+#overlay{
+  position:fixed;
+  opacity: 0;
+  background-color: rgba(26, 87, 24, 0.37);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+#overlay.active{
+  opacity: 1;
+  pointer-events: all;
+}
+
+input, select{
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 0px 0px 10px 0px;
+  border: solid rgba(0, 0, 0, 0.432) 1px;
+  box-shadow: 0.1em 0.1em 0.3em rgba(1, 29, 1, 0.479);
+}
+
+.bookCatalog{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 1em;
+  row-gap: 1em;
+}

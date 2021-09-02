@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel='stylesheet' href='/style.css'>
+  <script src='/scripts.js' defer></script>
+</head>
+
+<body>
+  <div class='mainPage'>
+    <div class='navbar'>
+      <div class=title>
+        Atomo
+      </div>
+      <div class='userData'>
+        I'm the user name
+      </div>
+      <button id='openForm'>
+        Add
+      </button>
+      <div class='sortingMenu'>
+        <select id='sort'>
+          <option value='byTitle'>Sort by title</option>
+          <option value='byAuthor'>Sort by author</option>
+          <option value='byYear'>Sort by year</option>
+          <option value='byPages'>Sort by length</option>
+          <options value='byType'>Sort by type</options>
+          <option value='byStatus'>Sort by status</option>
+        </select>
+        <input type='checkbox' id='sortingOrder'>
+    </div>
+      <div class='searchbar'>
+      </div>
+    </div>
+    <div class='bookCatalog' id='catalog'>
+    </div>
+    <footer>
+    </footer>
+  </div>
+
+  <div class='popUp' id='popUpId'>
+    <div class='formTop'>
+      <p>Add a new book or document.</p>
+      <button id='closePopUp'>&times;</button>
+    </div>
+    <div class=form>
+      <input type='text' id='title' placeholder='Insert title'>
+      <input type='text' id='author' placeholder='Insert author'>
+      <input type='number' id='year' required min='0' placeholder='Insert release year'>
+      <input type='number' id='pages' required min='0' placeholder='Insert total pages'>
+      <select id='bookType'>
+        <option value="">--Choose the text type--</option>
+        <option value="Book">Book</option>
+        <option value="Document">Document</option>
+      </select>
+      <div>
+        <label for='isRead'>Read:</label>
+        <input type='checkbox' id='isRead' name='isRead'>
+      </div>
+      <input type='submit' id='submit'>
+      <p id='submitStatus'></p>
+    </div>
+  </div>
+  <div id='overlay'>
+  </div>
+</body>
+
+</html>
