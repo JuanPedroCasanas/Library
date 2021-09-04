@@ -100,17 +100,13 @@ function submitBook() {
 
 
 function createBook(title, author, year, pages, type, read) {
-
   let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
   let authorWords = author.split(' ');
-
-  for (let i = authorWords.length - 1; i > 0; i--) {
+  for (let i = authorWords.length - 1; i >= 0; i--) {
     authorWords[i] = authorWords[i].charAt(0).toUpperCase() +
       authorWords[i].toLowerCase().slice(1);
   }
-
   let fxdAuthor = authorWords.join(' ');
-
   this.title = fxdTitle;
   this.author = fxdAuthor;
   this.year = year;
@@ -138,38 +134,42 @@ function compareTitles(title) {
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
-  let newBook = document.createElement('div');
-  let title = document.createElement('p');
-  title.textContent = `Title: ${book.title}`;
-  let author = document.createElement('p');
-  author.textContent = `Author: ${book.author}`;
-  let year = document.createElement('p');
-  year.textContent = `Release Year: ${book.year}`;
-  let pages = document.createElement('p');
-  pages.textContent = `Pages: ${book.pages}`;
-  let type = document.createElement('p');
-  type.textContent = `Type: ${book.type}`;
-  let status = document.createElement('p');
-  status.textContent = `Status: ${book.read}`;
-  newBook.appendChild(title);
-  newBook.appendChild(author);
-  newBook.appendChild(year);
-  newBook.appendChild(pages);
-  newBook.appendChild(type);
-  newBook.appendChild(status);
-  newBook.style.height = '60%';
-  newBook.style.display = 'grid';
-  newBook.style.gridTemplateRows = '2.5em 2.5em 2.5em 2.5em 2.5em 2.5em';
-  newBook.style.gridTemplateColumns = '1fr';
-  newBook.style.rowGap = '0.5em';
-  newBook.style.padding = '0em 0em 0em 0.5em';
-  newBook.style.padding = '0.5 em';
-  newBook.style.border = 'solid black 5px';
-  newBook.style.overflow = 'auto';
-  catalog.appendChild(newBook);
   sortGrid()
+  CreateLibraryItem();
 }
 
+function CreateLibraryItem() {
+  document.querySelectorAll('.libraryItem').forEach(e => e.remove());
+  for (i = 0; i <= myLibrary.length - 1; i++) {
+    let newBook = document.createElement('div');
+    newBook.classList.add('libraryItem');
+    let title = document.createElement('p');
+    title.textContent = `Title: ${myLibrary[i].title}`;
+    let author = document.createElement('p');
+    author.textContent = `Author: ${myLibrary[i].author}`;
+    let year = document.createElement('p');
+    year.textContent = `Release Year: ${myLibrary[i].year}`;
+    let pages = document.createElement('p');
+    pages.textContent = `Pages: ${myLibrary[i].pages}`;
+    let type = document.createElement('p');
+    type.textContent = `Type: ${myLibrary[i].type}`;
+    let status = document.createElement('p');
+    status.textContent = `Status: ${myLibrary[i].read}`;
+    newBook.appendChild(title);
+    newBook.appendChild(author);
+    newBook.appendChild(year);
+    newBook.appendChild(pages);
+    newBook.appendChild(type);
+    newBook.appendChild(status);
+    console.log(newBook.type);
+    if(myLibrary[i].type === 'Document'){
+      newBook.style.backgroundColor = 'Yellow';
+    } else {
+      newBook.style.backgroundColor = 'red';
+    }
+    catalog.appendChild(newBook);
+  }
+}
 
 
 function sortGrid() {
@@ -181,12 +181,14 @@ function sortGrid() {
           if (a.title > b.title) { return -1; }
           return 0;
         })
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => {
           if (a.title < b.title) { return -1; }
           if (a.title > b.title) { return 1; }
           return 0;
         })
+        CreateLibraryItem()
       }
       break;
 
@@ -197,28 +199,34 @@ function sortGrid() {
           if (a.author > b.author) { return -1; }
           return 0;
         })
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => {
           if (a.author < b.author) { return -1; }
           if (a.author > b.author) { return 1; }
           return 0;
         })
+        CreateLibraryItem()
       }
       break;
 
     case 'byYear':
-      if(sortingOrder.checked) {
+      if (sortingOrder.checked) {
         myLibrary.sort((a, b) => b.year - a.year);
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => a.year - b.year);
+        CreateLibraryItem()
       }
       break;
 
     case 'byPages':
-      if(sortingOrder.checked) {
+      if (sortingOrder.checked) {
         myLibrary.sort((a, b) => b.pages - a.pages);
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => a.pages - b.pages);
+        CreateLibraryItem()
       }
       break;
 
@@ -229,12 +237,14 @@ function sortGrid() {
           if (a.type > b.type) { return -1; }
           return 0;
         })
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => {
           if (a.type < b.type) { return -1; }
           if (a.type > b.type) { return 1; }
           return 0;
         })
+        CreateLibraryItem()
       }
       break;
 
@@ -245,12 +255,14 @@ function sortGrid() {
           if (a.read > b.read) { return -1; }
           return 0;
         })
+        CreateLibraryItem()
       } else {
         myLibrary.sort((a, b) => {
           if (a.read < b.read) { return -1; }
           if (a.read > b.read) { return 1; }
           return 0;
         })
+        CreateLibraryItem()
       }
       break;
 
