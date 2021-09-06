@@ -10,6 +10,10 @@ const sortBySelect = document.getElementById('sort');
 sortBySelect.addEventListener('change', sortGrid)
 const sortingOrder = document.getElementById('sortingOrder');
 sortingOrder.addEventListener('change', sortGrid);
+const searchFilter = document.getElementById('searchFilter');
+searchFilter.addEventListener('change', search);
+const searchBar = document.getElementById('searchBar');
+searchBar.addEventListener('input', search);
 
 //Catalog//
 let myLibrary = [];
@@ -53,10 +57,7 @@ closeFormBtn.addEventListener('click', () => {
 
 
 
-
-
-
-
+//This function checks that every field is completed with the correct information and if all requirements are fullfiled it adds a book to the library//
 function submitBook() {
   if (yearField.value != '' && yearField.value > currentYear) {
     submitStatus.style.color = 'red';
@@ -98,7 +99,8 @@ function submitBook() {
   }
 }
 
-
+//Object creator function that takes the inputs from the form fields//
+//Capitalizes the first letter of both the title and the author value//
 function createBook(title, author, year, pages, type, read) {
   let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
   let authorWords = author.split(' ');
@@ -123,6 +125,7 @@ function clearInputs() {
   pagesField.value = '';
 }
 
+//Checks if the file is already uploaded//
 function compareTitles(title) {
   let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
   return myLibrary.some((e) => e.title === fxdTitle);
@@ -131,30 +134,31 @@ function compareTitles(title) {
 
 
 
-
+//Adds the file to the array, sorts the array and then creates the grid//
 function addBookToLibrary(book) {
   myLibrary.push(book);
   sortGrid()
   CreateLibraryItem();
 }
 
-function CreateLibraryItem() {
+//Creates the grid with the array objects in it//
+function CreateLibraryItem(docList = myLibrary) {
   document.querySelectorAll('.libraryItem').forEach(e => e.remove());
-  for (i = 0; i <= myLibrary.length - 1; i++) {
+  for (i = 0; i <= docList.length - 1; i++) {
     let newBook = document.createElement('div');
     newBook.classList.add('libraryItem');
     let title = document.createElement('p');
-    title.textContent = `Title: ${myLibrary[i].title}`;
+    title.textContent = `Title: ${docList[i].title}`;
     let author = document.createElement('p');
-    author.textContent = `Author: ${myLibrary[i].author}`;
+    author.textContent = `Author: ${docList[i].author}`;
     let year = document.createElement('p');
-    year.textContent = `Release Year: ${myLibrary[i].year}`;
+    year.textContent = `Release Year: ${docList[i].year}`;
     let pages = document.createElement('p');
-    pages.textContent = `Pages: ${myLibrary[i].pages}`;
+    pages.textContent = `Pages: ${docList[i].pages}`;
     let type = document.createElement('p');
-    type.textContent = `Type: ${myLibrary[i].type}`;
+    type.textContent = `Type: ${docList[i].type}`;
     let status = document.createElement('p');
-    status.textContent = `Status: ${myLibrary[i].read}`;
+    status.textContent = `Status: ${docList[i].read}`;
     newBook.appendChild(title);
     newBook.appendChild(author);
     newBook.appendChild(year);
@@ -162,7 +166,7 @@ function CreateLibraryItem() {
     newBook.appendChild(type);
     newBook.appendChild(status);
     console.log(newBook.type);
-    if(myLibrary[i].type === 'Document'){
+    if (docList[i].type === 'Document') {
       newBook.style.backgroundColor = 'Yellow';
     } else {
       newBook.style.backgroundColor = 'red';
@@ -264,6 +268,29 @@ function sortGrid() {
         })
         CreateLibraryItem()
       }
+      break;
+
+    default:
+      alert('Something went wrong');
+      break;
+  }
+}
+
+function search() {
+  let x
+  switch(searchFilter.value){
+    case 'byTitle':
+      x = myLibrary.filter((e) => {
+        return e.title.toLowerCase().includes(searchBar.value.toLowerCase());
+      });
+      CreateLibraryItem(x);
+      break;
+
+    case 'byAuthor':
+      x = myLibrary.filter((e) => {
+        return e.author.toLowerCase().includes(searchBar.value.toLowerCase());
+      });
+      CreateLibraryItem(x);
       break;
 
     default:
