@@ -75,7 +75,7 @@ function submitBook() {
   } else if (/\d/.test(authorField.value)) {
     submitStatus.style.color = 'red';
     submitStatus.textContent = 'Numbers are not allowed in the author field.';
-  } else if (compareTitles(titleField.value)) {
+  } else if (compareTitlesAndAuthor(titleField.value, authorField.value)) {
     submitStatus.style.color = 'red';
     submitStatus.textContent = 'This document or book has already been uploaded.';
   } else if (titleField.value != '' &&
@@ -85,10 +85,10 @@ function submitBook() {
     bookType.value != '' &&
     yearField.value <= currentYear) {
     addBookToLibrary
-      (new createBook
+      ((new createBook
         (titleField.value, authorField.value, yearField.value,
           pagesField.value, bookType.value,
-          (isRead.checked === true) ? 'Finished!' : 'Not finished yet!')
+          (isRead.checked === true) ? 'Finished!' : 'Not finished yet!'))
       );
     clearInputs();
     submitStatus.style.color = 'green';
@@ -115,6 +115,8 @@ function createBook(title, author, year, pages, type, read) {
   this.pages = pages;
   this.type = type;
   this.read = read;
+  this.title;
+  this.remove = () => {removeItem(fxdAuthor, fxdTitle)};
 }
 
 
@@ -126,9 +128,16 @@ function clearInputs() {
 }
 
 //Checks if the file is already uploaded//
-function compareTitles(title) {
+function compareTitlesAndAuthor(title, author) {
   let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
-  return myLibrary.some((e) => e.title === fxdTitle);
+  let authorWords = author.split(' ');
+  for (let i = authorWords.length - 1; i >= 0; i--) {
+    authorWords[i] = authorWords[i].charAt(0).toUpperCase() +
+      authorWords[i].toLowerCase().slice(1);
+  }
+  let fxdAuthor = authorWords.join(' ');
+  return (myLibrary.some((e) => (e.title === fxdTitle) &&
+   (e.author === fxdAuthor)));
 }
 
 
@@ -159,13 +168,16 @@ function CreateLibraryItem(docList = myLibrary) {
     type.textContent = `Type: ${docList[i].type}`;
     let status = document.createElement('p');
     status.textContent = `Status: ${docList[i].read}`;
+    let removeBtn = document.createElement('button');
+    removeBtn.textContent = 'x';
+    removeBtn.addEventListener('click', docList[i].remove);
+    newBook.appendChild(removeBtn);
     newBook.appendChild(title);
     newBook.appendChild(author);
     newBook.appendChild(year);
     newBook.appendChild(pages);
     newBook.appendChild(type);
     newBook.appendChild(status);
-    console.log(newBook.type);
     if (docList[i].type === 'Document') {
       newBook.style.backgroundColor = 'Yellow';
     } else {
@@ -277,24 +289,39 @@ function sortGrid() {
 }
 
 function search() {
-  let x
-  switch(searchFilter.value){
+  let searchInput;
+  switch (searchFilter.value) {
     case 'byTitle':
-      x = myLibrary.filter((e) => {
+      searchInput = myLibrary.filter((e) => {
         return e.title.toLowerCase().includes(searchBar.value.toLowerCase());
       });
-      CreateLibraryItem(x);
+      CreateLibraryItem(searchInput);
       break;
 
     case 'byAuthor':
-      x = myLibrary.filter((e) => {
+      searchInput = myLibrary.filter((e) => {
         return e.author.toLowerCase().includes(searchBar.value.toLowerCase());
       });
-      CreateLibraryItem(x);
+      CreateLibraryItem(searchInput);
       break;
 
     default:
       alert('Something went wrong');
       break;
   }
+}
+
+
+function removeItem(title, author) {
+  let mappedMyLibrary = myLibrary.map(e => {
+    if (e.title === title && e.author === author) {
+      return true
+    } else {
+      return false
+    }
+  })
+
+  myLibrary.splice(mappedMyLibrary.indexOf(true), 1);
+  searchBar.value = '';
+  sortGrid();
 }
