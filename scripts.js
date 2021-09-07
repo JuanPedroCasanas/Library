@@ -16,7 +16,8 @@ const searchBar = document.getElementById('searchBar');
 searchBar.addEventListener('input', search);
 
 //Catalog//
-let myLibrary = [];
+let myLibrary = loadLocalStorage();
+window.onload = sortGrid;
 const catalog = document.getElementById('catalog');
 
 
@@ -115,8 +116,7 @@ function createBook(title, author, year, pages, type, read) {
   this.pages = pages;
   this.type = type;
   this.read = read;
-  this.title;
-  this.remove = () => {removeItem(fxdAuthor, fxdTitle)};
+  this.remove = () => { removeItem(fxdAuthor, fxdTitle) };
 }
 
 
@@ -137,7 +137,7 @@ function compareTitlesAndAuthor(title, author) {
   }
   let fxdAuthor = authorWords.join(' ');
   return (myLibrary.some((e) => (e.title === fxdTitle) &&
-   (e.author === fxdAuthor)));
+    (e.author === fxdAuthor)));
 }
 
 
@@ -146,6 +146,7 @@ function compareTitlesAndAuthor(title, author) {
 //Adds the file to the array, sorts the array and then creates the grid//
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  saveLocalStorage()
   sortGrid()
   CreateLibraryItem();
 }
@@ -320,8 +321,23 @@ function removeItem(title, author) {
       return false
     }
   })
-
   myLibrary.splice(mappedMyLibrary.indexOf(true), 1);
   searchBar.value = '';
+  saveLocalStorage()
   sortGrid();
+}
+
+function saveLocalStorage() {
+  localStorage.setItem('library', JSON.stringify(myLibrary));
+  return;
+}
+
+function loadLocalStorage() {
+  if (localStorage.length != 0) {
+    let tempLibrary = JSON.parse(localStorage.getItem('library'));
+    tempLibrary.forEach(e => e.remove = () => { removeItem(e.author, e.title) });
+    return tempLibrary;
+  } else {
+    return [];
+  }
 }
