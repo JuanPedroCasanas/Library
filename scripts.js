@@ -58,7 +58,8 @@ closeFormBtn.addEventListener('click', () => {
 
 
 
-//This function checks that every field is completed with the correct information and if all requirements are fullfiled it adds a book to the library//
+/*/This function checks that every field is completed with the correct 
+information and if all requirements are fullfiled it adds a book to the library/*/
 function submitBook() {
   if (yearField.value != '' && yearField.value > currentYear) {
     submitStatus.style.color = 'red';
@@ -100,8 +101,9 @@ function submitBook() {
   }
 }
 
-//Object creator function that takes the inputs from the form fields//
-//Capitalizes the first letter of both the title and the author value//
+/*/Object creator function that takes the inputs from the form fields
+Capitalizes the first letter of both the title and the author value
+It also adds a method for removing the object from the grid/*/
 function createBook(title, author, year, pages, type, read) {
   let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
   let authorWords = author.split(' ');
@@ -117,6 +119,13 @@ function createBook(title, author, year, pages, type, read) {
   this.type = type;
   this.read = read;
   this.remove = () => { removeItem(fxdAuthor, fxdTitle) };
+  this.toggleRead = () => {
+    (this.read === 'Finished!') ?
+      this.read = 'Not finished yet!' :
+      this.read = 'Finished!';
+    saveLocalStorage();
+    sortGrid();
+  }
 }
 
 
@@ -159,31 +168,64 @@ function CreateLibraryItem(docList = myLibrary) {
     newBook.classList.add('libraryItem');
     let title = document.createElement('p');
     title.textContent = `Title: ${docList[i].title}`;
+    title.style.gridColumnStart = '1';
+    title.style.gridColumnEnd = '2';
     let author = document.createElement('p');
     author.textContent = `Author: ${docList[i].author}`;
+    author.style.gridColumnStart = '1';
+    author.style.gridColumnEnd = '2';
     let year = document.createElement('p');
     year.textContent = `Release Year: ${docList[i].year}`;
+    year.style.gridColumnStart = '1';
+    year.style.gridColumnEnd = '2';
     let pages = document.createElement('p');
     pages.textContent = `Pages: ${docList[i].pages}`;
+    pages.style.gridColumnStart = '1';
+    pages.style.gridColumnEnd = '2';
     let type = document.createElement('p');
     type.textContent = `Type: ${docList[i].type}`;
+    type.style.gridColumnStart = '1';
+    type.style.gridColumnEnd = '2';
     let status = document.createElement('p');
     status.textContent = `Status: ${docList[i].read}`;
+    status.style.gridColumnEnd = '1';
+    status.style.gridColumnStart = '1';
     let removeBtn = document.createElement('button');
     removeBtn.textContent = 'x';
+    removeBtn.style.gridColumnStart = '2';
+    removeBtn.style.gridColumnEnd = '3';
     removeBtn.addEventListener('click', docList[i].remove);
-    newBook.appendChild(removeBtn);
+    removeBtn.classList.add('removeBtn');
+    icon = document.createElement('img');
+    let rmvBtnAndIcon = document.createElement('div');
+    rmvBtnAndIcon.classList.add('rmvBtnAndIcon');
+    rmvBtnAndIcon.appendChild(icon);
+    rmvBtnAndIcon.appendChild(removeBtn);
+    let toggleStatus = document.createElement('input');
+    toggleStatus.type = 'checkbox';
+    toggleStatus.checked = (status.textContent === 'Status: Finished!') ? true : false;
+    toggleStatus.addEventListener('click', docList[i].toggleRead);
+    toggleStatus.style.gridColumnStart = '2';
+    toggleStatus.style.gridColumnEnd = '3';
+    newBook.appendChild(rmvBtnAndIcon);
     newBook.appendChild(title);
     newBook.appendChild(author);
     newBook.appendChild(year);
     newBook.appendChild(pages);
     newBook.appendChild(type);
     newBook.appendChild(status);
+    newBook.appendChild(toggleStatus);
+    //This function sets the visuals based on the file type//
     if (docList[i].type === 'Document') {
-      newBook.style.backgroundColor = 'Yellow';
-    } else {
+      icon.setAttribute('src', '/images/folder.svg');
+      icon.classList.add('docIco');
       newBook.style.backgroundColor = 'red';
+    } else {
+      icon.setAttribute('src', '/images/book.png');
+      icon.classList.add('bookIco');
+      newBook.style.backgroundColor = 'yellow';
     }
+    //
     catalog.appendChild(newBook);
   }
 }
@@ -336,6 +378,14 @@ function loadLocalStorage() {
   if (localStorage.length != 0) {
     let tempLibrary = JSON.parse(localStorage.getItem('library'));
     tempLibrary.forEach(e => e.remove = () => { removeItem(e.author, e.title) });
+    tempLibrary.forEach(e => e.toggleRead = () => {
+      (e.read === 'Finished!') ?
+        e.read = 'Not finished yet!' :
+        e.read = 'Finished!';
+      saveLocalStorage();
+      sortGrid();
+    }
+    )
     return tempLibrary;
   } else {
     return [];
