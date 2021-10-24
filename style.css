@@ -1,3 +1,5 @@
+@media (max-width: 1080px){
+
 *{
   box-sizing: border-box;
 }
@@ -72,7 +74,7 @@ footer{
   opacity: 1;
   border-radius: 35%;
   border: none;
-  background-color: rgba(65, 1, 1, 0.644);
+  background-color: rgba(53, 17, 9, 0.4);
 }
 
 .sortingMenu{
@@ -98,8 +100,8 @@ footer{
 }
 
 .popUp{
-  height: 85%;
-  width: 35%;
+  height: 70%;
+  width: 90%;
   display: grid;
   grid-template-rows: 10% 90%;
   grid-template-columns: 1fr;
@@ -115,7 +117,7 @@ footer{
   z-index: 20;
   background-color: white;
   font-family:Arial, Helvetica, sans-serif;
-  
+  font-size: 2.5em;
 }
 
 .popUp.active{
@@ -193,9 +195,13 @@ input, select{
   border-radius: 0px 0px 10px 0px;
   border: solid rgba(0, 0, 0, 0.432) 1px;
   box-shadow: 0.1em 0.1em 0.3em rgba(1, 29, 1, 0.479);
+  font-size: 1em;
 }
 
 .libraryItem{
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;;
   font-size: 2em;
   font-weight: bold;
   display: grid;
@@ -244,4 +250,260 @@ input, select{
   width: 2em;
   height: 2em;
   justify-self: left;
+}
+}
+
+@media (min-width: 1080px){
+*{
+  box-sizing: border-box;
+}
+
+html{
+  width: 100%;
+  height: 100%;
+}
+
+body{
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  background-color: #d2c5af;
+background-image: linear-gradient(to right, #0e3e06, #0e3e06 19.5px, #d2c5af 19.5px, #d2c5af );
+background-size: 2em 100%;
+}
+
+.mainPage{
+  margin: 0%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20em 1fr 2em;
+  row-gap: 1em;
+}
+.navbar{
+  width: 100%;
+  height: 100%;
+  font-size: 1.8em;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  background-color: rgb(35, 70, 35);
+  padding: 1em;
+  border-radius: 0% 0% 3% 3%;
+  background: #223e23;
+  box-shadow: inset 50px 50px 100px #152716,
+              inset -50px -50px 100px #2f5530,
+              0px 0px 0.5em 0.5em #0b140b;
+}
+
+footer{
+  position:fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2em;
+  border-radius: 0% 0% 3% 3%;
+  background: #223e23;
+  box-shadow: inset 50px 50px 100px #152716,
+              inset -50px -50px 100px #2f5530,
+              0em 0em 0.2em 0.5em #0b140b;
+}
+
+.title{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  justify-self: center;
+  align-self: center;
+}
+
+#openForm{
+  position: fixed;
+  height: 10em;
+  width: 10em;
+  justify-self: right;
+  margin-right: 5em;
+  background-image: url(/images/add.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  opacity: 1;
+  border-radius: 35%;
+  border: none;
+  background-color: rgba(53, 17, 9, 0.4);
+}
+
+.sortingMenu{
+  justify-self: right;
+  align-self: center;
+}
+
+#sort, #sortingOrder{
+  font-size: 1em;
+}
+
+.searchbar{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 0.5em;
+  justify-self: left;
+  align-self: center;
+}
+
+#searchFilter, #searchBar{
+  font-size: 1em;
+}
+
+.popUp{
+  height: 90%;
+  width: 35%;
+  display: grid;
+  grid-template-rows: 10% 90%;
+  grid-template-columns: 1fr;
+  row-gap: 1em;
+  padding: 2em;
+  border: 0.12em solid black;
+  border-radius: 10%;
+  transition: 0.2s;
+  position: fixed;
+  top: 47.3%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 20;
+  background-color: white;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+}
+
+.popUp.active{
+  transition: 0.2s;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.formTop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+#closePopUp{
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 1em;
+  height: 1em;
+  color: white;
+  background-color: red;
+  border: none;
+  font-weight: 900;
+  font-size: 2em;
+  border-radius: 20%;
+  box-shadow: 0em 0em 0.1em rgb(160, 59, 59);
+  cursor: pointer;
+}
+
+#closePopUp:hover{
+  transform: scale(120%);
+}
+
+.form{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 8% 1fr 1fr;
+  row-gap: 1em;
+}
+
+.isread, label{
+  justify-self: center;
+}
+
+#submitStatus{
+  text-align: center;
+}
+
+#submit{
+  cursor: pointer;
+}
+
+#overlay{
+  position:fixed;
+  opacity: 0;
+  background-color: rgba(26, 87, 24, 0.37);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+#overlay.active{
+  opacity: 1;
+  pointer-events: all;
+}
+
+input, select{
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 0px 0px 10px 0px;
+  border: solid rgba(0, 0, 0, 0.432) 1px;
+  box-shadow: 0.1em 0.1em 0.3em rgba(1, 29, 1, 0.479);
+  font-size: 1em;
+}
+
+.libraryItem{
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;;
+  font-size: 2em;
+  font-weight: bold;
+  display: grid;
+  grid-template-rows: 2em 2.5em 2.5em 2.5em 2.5em 2.5em 2.5em;
+  grid-template-columns: 1fr 1em;
+  row-gap: 1em;
+  padding: 0em 0em 0em 0.5em;
+  border: solid black 5px;
+  overflow: scroll;
+  align-items: center;
+  background-size: 2em;
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+}
+
+.bookCatalog{
+  display: grid;
+  padding: 1em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 30%;
+  column-gap: 0.5em;
+  row-gap: 1em;
+}
+
+.rmvBtnAndIcon{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding-top: 0.5em;
+  align-items: center;
+}
+
+.removeBtn{
+  width: 2em;
+  height: 2em;
+  justify-self: right;
+}
+
+.docIco{
+  width: 2em;
+  height: 2em;
+  justify-self: left;
+}
+
+.bookIco{
+  width: 2em;
+  height: 2em;
+  justify-self: left;
+}
+
 }
