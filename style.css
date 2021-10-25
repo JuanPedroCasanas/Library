@@ -235,9 +235,22 @@ input, select{
 }
 
 .removeBtn{
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 1em;
   justify-self: right;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-color: rgb(148, 0, 0);
+  border: none;
+  font-weight: 900;
+  border-radius: 20%;
+  box-shadow: 0em 0em 0.1em rgb(160, 59, 59);
+  cursor: pointer;
 }
 
 .docIco{
@@ -250,6 +263,51 @@ input, select{
   width: 2em;
   height: 2em;
   justify-self: left;
+}
+
+footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em 1em 2em;
+  color: rgba(255, 255, 255, 0.788);
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: -2px 0 rgba(0, 0, 0, 0.726), 0 2px rgba(0, 0, 0, 0.726), 2px 0 rgba(0, 0, 0, 0.726), 0 -2px rgba(0, 0, 0, 0.726);
+}
+
+.octocat{
+  width: 1.5em;
+  height: 1.5em;
+  background-color: white;
+  border-radius: 20%;
+}
+
+.octocat:hover{
+  scale: 110%;
+  animation-duration: 3s;
+  animation-name: 'jiggle';
+  animation-timing-function: cubic-bezier(.33,.08,.07,.88);
+}
+@keyframes jiggle {
+  0%{
+  }
+  30%{
+    rotate: -5deg;
+  }
+  45%{
+    rotate: 9deg;
+  }
+  70%{
+    rotate: -8deg
+  }
+  90%{
+    rotate: 6em;
+  }
+  95%{
+    rotate: -3deg;
+  }
+  100%{
+  }
 }
 }
 
@@ -455,7 +513,7 @@ input, select{
 .libraryItem{
   font-family: Arial, Helvetica, sans-serif;
   color: white;
-  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
   font-size: 2em;
   font-weight: bold;
   display: grid;
@@ -492,6 +550,18 @@ input, select{
   width: 2em;
   height: 2em;
   justify-self: right;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-color: rgb(148, 0, 0);
+  border: none;
+  font-weight: 900;
+  border-radius: 20%;
+  box-shadow: 0em 0em 0.1em rgb(160, 59, 59);
+  cursor: pointer;
 }
 
 .docIco{
@@ -506,4 +576,48 @@ input, select{
   justify-self: left;
 }
 
+footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em 1em 2em;
+  color: rgba(255, 255, 255, 0.788);
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: -2px 0 rgba(0, 0, 0, 0.726), 0 2px rgba(0, 0, 0, 0.726), 2px 0 rgba(0, 0, 0, 0.726), 0 -2px rgba(0, 0, 0, 0.726);
+}
+
+.octocat{
+  width: 1.5em;
+  height: 1.5em;
+  background-color: white;
+  border-radius: 20%;
+}
+
+.octocat:hover{
+  scale: 110%;
+  animation-duration: 3s;
+  animation-name: 'jiggle';
+  animation-timing-function: cubic-bezier(.33,.08,.07,.88);
+}
+@keyframes jiggle {
+  0%{
+  }
+  30%{
+    rotate: -5deg;
+  }
+  45%{
+    rotate: 9deg;
+  }
+  70%{
+    rotate: -8deg
+  }
+  90%{
+    rotate: 6em;
+  }
+  95%{
+    rotate: -3deg;
+  }
+  100%{
+  }
+}
 }

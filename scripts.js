@@ -118,7 +118,7 @@ function createBook(title, author, year, pages, type, read) {
   this.pages = pages;
   this.type = type;
   this.read = read;
-  this.remove = () => { removeItem(fxdAuthor, fxdTitle) };
+  this.remove = () => { removeItem(fxdTitle, fxdAuthor) };
   this.toggleRead = () => {
     (this.read === 'Finished!') ?
       this.read = 'Not finished yet!' :
@@ -363,6 +363,7 @@ function removeItem(title, author) {
       return false
     }
   })
+  console.log(mappedMyLibrary);
   myLibrary.splice(mappedMyLibrary.indexOf(true), 1);
   searchBar.value = '';
   saveLocalStorage()
@@ -377,7 +378,7 @@ function saveLocalStorage() {
 function loadLocalStorage() {
   if (localStorage.length != 0) {
     let tempLibrary = JSON.parse(localStorage.getItem('library'));
-    tempLibrary.forEach(e => e.remove = () => { removeItem(e.author, e.title) });
+    tempLibrary.forEach(e => e.remove = () => { removeItem(e.title, e.author) });
     tempLibrary.forEach(e => e.toggleRead = () => {
       (e.read === 'Finished!') ?
         e.read = 'Not finished yet!' :
