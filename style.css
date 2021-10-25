@@ -68,7 +68,7 @@ footer{
   width: 10em;
   justify-self: right;
   margin-right: 5em;
-  background-image: url(/images/add.svg);
+  background-image: url(/Library/images/add.svg);
   background-repeat: no-repeat;
   background-size: 100%;
   opacity: 1;
@@ -322,7 +322,7 @@ footer{
   width: 10em;
   justify-self: right;
   margin-right: 5em;
-  background-image: url(/images/add.svg);
+  background-image: url(/Library/images/add.svg);
   background-repeat: no-repeat;
   background-size: 100%;
   opacity: 1;

@@ -217,11 +217,11 @@ function CreateLibraryItem(docList = myLibrary) {
     newBook.appendChild(toggleStatus);
     //This function sets the visuals based on the file type//
     if (docList[i].type === 'Document') {
-      icon.setAttribute('src', '/images/folder.svg');
+      icon.setAttribute('src', '/Library/images/folder.svg');
       icon.classList.add('docIco');
       newBook.style.backgroundColor = '#826200';
     } else {
-      icon.setAttribute('src', '/images/book.png');
+      icon.setAttribute('src', '/Library/images/book.png');
       icon.classList.add('bookIco');
       newBook.style.backgroundColor = '#2B2819';
     }
