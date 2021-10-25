@@ -6,3 +6,7 @@ Objectives:
 	Mark them as read and be able to edit them
 	Sorting by various parameters
 	Local database, maybe the cloud in the future
+
+----Finished!----
+
+Live: https://juanpedrocasanas.github.io/Library/
