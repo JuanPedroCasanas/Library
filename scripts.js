@@ -1,5 +1,3 @@
-
-
 //Navbar Inputs//
 const openFormBtn = document.getElementById('openForm');
 openFormBtn.addEventListener('click', () => {
@@ -16,13 +14,10 @@ const searchBar = document.getElementById('searchBar');
 searchBar.addEventListener('input', search);
 
 //Catalog//
-let myLibrary = loadLocalStorage();
-window.onload = sortGrid;
 const catalog = document.getElementById('catalog');
-
-
-
-
+let myLibrary = loadLocalStorage();
+window.onload = sortGrid();
+window.onload = CreateLibraryItem();
 
 //Form inputs//
 const closeFormBtn = document.getElementById('closePopUp');
@@ -44,19 +39,6 @@ closeFormBtn.addEventListener('click', () => {
   submitStatus.textContent = '';
 })
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*/This function checks that every field is completed with the correct 
 information and if all requirements are fullfiled it adds a book to the library/*/
@@ -86,12 +68,10 @@ function submitBook() {
     pagesField.value != '' &&
     bookType.value != '' &&
     yearField.value <= currentYear) {
-    addBookToLibrary
-      ((new createBook
-        (titleField.value, authorField.value, yearField.value,
-          pagesField.value, bookType.value,
-          (isRead.checked === true) ? 'Finished!' : 'Not finished yet!'))
-      );
+    let readStatus = (isRead.checked === true) ? 'Finished!' : 'Not finished yet!';
+    let tempBook = new createBook(titleField.value, authorField.value,
+      yearField.value, pagesField.value, bookType.value, readStatus);
+    addBookToLibrary(tempBook);
     clearInputs();
     submitStatus.style.color = 'green';
     submitStatus.textContent = `${bookType.value} uploaded succesfully!`
@@ -101,30 +81,37 @@ function submitBook() {
   }
 }
 
-/*/Object creator function that takes the inputs from the form fields
-Capitalizes the first letter of both the title and the author value
-It also adds a method for removing the object from the grid/*/
-function createBook(title, author, year, pages, type, read) {
-  let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
+function fixAuthor(author) {
   let authorWords = author.split(' ');
   for (let i = authorWords.length - 1; i >= 0; i--) {
     authorWords[i] = authorWords[i].charAt(0).toUpperCase() +
       authorWords[i].toLowerCase().slice(1);
   }
   let fxdAuthor = authorWords.join(' ');
-  this.title = fxdTitle;
-  this.author = fxdAuthor;
-  this.year = year;
-  this.pages = pages;
-  this.type = type;
-  this.read = read;
-  this.remove = () => { removeItem(fxdTitle, fxdAuthor) };
-  this.toggleRead = () => {
-    (this.read === 'Finished!') ?
-      this.read = 'Not finished yet!' :
-      this.read = 'Finished!';
-    saveLocalStorage();
-    sortGrid();
+  return fxdAuthor;
+}
+
+function fixTitle(title) {
+  let fxdTitle = title.charAt(0).toUpperCase() + title.toLowerCase().slice(1);
+  return fxdTitle;
+}
+
+class createBook {
+  constructor(title, author, year, pages, type, read) {
+    this.title = fixTitle(title);
+    this.author = fixAuthor(author);
+    this.year = year;
+    this.pages = pages;
+    this.type = type;
+    this.read = read;
+    this.remove = () => { removeItem(this.title, this.author) };
+    this.toggleRead = () => {
+      (this.read === 'Finished!') ?
+        this.read = 'Not finished yet!' :
+        this.read = 'Finished!';
+      saveLocalStorage();
+      sortGrid();
+    }
   }
 }
 
@@ -155,46 +142,45 @@ function compareTitlesAndAuthor(title, author) {
 //Adds the file to the array, sorts the array and then creates the grid//
 function addBookToLibrary(book) {
   myLibrary.push(book);
-  saveLocalStorage()
-  sortGrid()
-  CreateLibraryItem();
+  saveLocalStorage();
+  sortGrid();
 }
 
 //Creates the grid with the array objects in it//
-function CreateLibraryItem(docList = myLibrary) {
+function CreateLibraryItem() {
   document.querySelectorAll('.libraryItem').forEach(e => e.remove());
-  for (i = 0; i <= docList.length - 1; i++) {
+  for (i = myLibrary.length - 1; i != -1; --i) {
     let newBook = document.createElement('div');
     newBook.classList.add('libraryItem');
     let title = document.createElement('p');
-    title.textContent = `Title: ${docList[i].title}`;
+    title.textContent = `Title: ${myLibrary[i].title}`;
     title.style.gridColumnStart = '1';
     title.style.gridColumnEnd = '2';
     let author = document.createElement('p');
-    author.textContent = `Author: ${docList[i].author}`;
+    author.textContent = `Author: ${myLibrary[i].author}`;
     author.style.gridColumnStart = '1';
     author.style.gridColumnEnd = '2';
     let year = document.createElement('p');
-    year.textContent = `Release Year: ${docList[i].year}`;
+    year.textContent = `Release Year: ${myLibrary[i].year}`;
     year.style.gridColumnStart = '1';
     year.style.gridColumnEnd = '2';
     let pages = document.createElement('p');
-    pages.textContent = `Pages: ${docList[i].pages}`;
+    pages.textContent = `Pages: ${myLibrary[i].pages}`;
     pages.style.gridColumnStart = '1';
     pages.style.gridColumnEnd = '2';
     let type = document.createElement('p');
-    type.textContent = `Type: ${docList[i].type}`;
+    type.textContent = `Type: ${myLibrary[i].type}`;
     type.style.gridColumnStart = '1';
     type.style.gridColumnEnd = '2';
     let status = document.createElement('p');
-    status.textContent = `Status: ${docList[i].read}`;
+    status.textContent = `Status: ${myLibrary[i].read}`;
     status.style.gridColumnEnd = '1';
     status.style.gridColumnStart = '1';
     let removeBtn = document.createElement('button');
     removeBtn.textContent = 'x';
     removeBtn.style.gridColumnStart = '2';
     removeBtn.style.gridColumnEnd = '3';
-    removeBtn.addEventListener('click', docList[i].remove);
+    removeBtn.addEventListener('click', myLibrary[i].remove);
     removeBtn.classList.add('removeBtn');
     icon = document.createElement('img');
     let rmvBtnAndIcon = document.createElement('div');
@@ -204,7 +190,7 @@ function CreateLibraryItem(docList = myLibrary) {
     let toggleStatus = document.createElement('input');
     toggleStatus.type = 'checkbox';
     toggleStatus.checked = (status.textContent === 'Status: Finished!') ? true : false;
-    toggleStatus.addEventListener('click', docList[i].toggleRead);
+    toggleStatus.addEventListener('click', myLibrary[i].toggleRead);
     toggleStatus.style.gridColumnStart = '2';
     toggleStatus.style.gridColumnEnd = '3';
     newBook.appendChild(rmvBtnAndIcon);
@@ -216,7 +202,7 @@ function CreateLibraryItem(docList = myLibrary) {
     newBook.appendChild(status);
     newBook.appendChild(toggleStatus);
     //This function sets the visuals based on the file type//
-    if (docList[i].type === 'Document') {
+    if (myLibrary[i].type === 'Document') {
       icon.setAttribute('src', '/images/folder.svg');
       icon.classList.add('docIco');
       newBook.style.backgroundColor = '#826200';
@@ -363,7 +349,6 @@ function removeItem(title, author) {
       return false
     }
   })
-  console.log(mappedMyLibrary);
   myLibrary.splice(mappedMyLibrary.indexOf(true), 1);
   searchBar.value = '';
   saveLocalStorage()
